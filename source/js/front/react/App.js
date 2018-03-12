@@ -6,54 +6,38 @@ import socket from '../socket-connect/socket-connect';
 
 var db = {};
 
-// let promise = new Promise((resolve, reject) => {
-//     socket.on("db",(res) => {
-//         console.log(res);
-//         resolve(res);
-//     });
-// });
-//
-// promise
-//     .then(
-//         result => {
-//             console.log("все хорошо ",result);
-//             db = result;
-//         },
-//         error => {
-//             console.log("все плохо ",error);
-//             db = error;
-//         }
-//     );
 
 class App extends Component {
-    state = {
-        db:"Нет продуктов в списке"
-    };
+
     constructor(props) {
         super(props);
+        this.state ={db: "Нет списка продуктов"};
+
+    }
+    componentWillMount() {
         socket.on("db",(res) => {
-            console.log("В реакте",res);
             this.setState({
                 db: res
             });
+            console.log("В реакте поменяли стейт",this.state.db);
         });
     }
-
-
     render() {
         const list = this.state.db;
-        return <ul>
+        console.log("render ",list);
+        return (typeof list !== "string")?<ul>
             {
-                (typeof list !== "string")?list.map((product,i)=>{
-                <li>
+                list.map((product, i)=> {
+                    <li>
                     <span>
-                        <strong>{console.log(product.title)}</strong>
+                        <strong>{product.title}</strong>
                     </span>
-                    <div>{product.startDate}</div>
-                    <div>{product.shelfLife}</div>
-                </li>
-            }):list}
-        </ul>;
+                        <div>{product.startDate}</div>
+                        <div>{product.shelfLife}</div>
+                    </li>
+                })
+            }
+        </ul>:list;
     }
 }
 
