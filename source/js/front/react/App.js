@@ -4,9 +4,6 @@
 import React, {Component} from 'react';
 import socket from '../socket-connect/socket-connect';
 
-var db = {};
-
-
 class App extends Component {
 
     constructor(props) {
@@ -19,25 +16,25 @@ class App extends Component {
             this.setState({
                 db: res
             });
-            console.log("В реакте поменяли стейт",this.state.db);
+            console.log("В реакте поменяли стейт",res);
         });
     }
     render() {
-        const list = this.state.db;
-        console.log("render ",list);
-        return (typeof list !== "string")?<ul>
+        const {db} = this.state;
+        console.log("render ",db);
+        return (typeof db !== "string")?<ul>
             {
-                list.map((product, i)=> {
-                    <li>
-                    <span>
-                        <strong>{product.title}</strong>
-                    </span>
-                        <div>{product.startDate}</div>
-                        <div>{product.shelfLife}</div>
+                db.map(product=> (
+                    <li key={product.ID}>
+                        <span>
+                            <strong>{product.title}</strong>
+                        </span>
+                            <div>{product.startDate}</div>
+                            <div>{product.shelfLife}</div>
                     </li>
-                })
+                ))
             }
-        </ul>:list;
+        </ul>:db;
     }
 }
 
