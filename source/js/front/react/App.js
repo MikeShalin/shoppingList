@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import socket from '../socket-connect/socket-connect';
 import Form from './Form';
 
-var db = {};
 
 
 class App extends Component {
