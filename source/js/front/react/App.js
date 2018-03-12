@@ -3,6 +3,7 @@
  */
 import React, {Component} from 'react';
 import socket from '../socket-connect/socket-connect';
+import Form from './Form';
 
 var db = {};
 
@@ -23,21 +24,27 @@ class App extends Component {
         });
     }
     render() {
-        const list = this.state.db;
+        const {db} = this.state;
         console.log("render ",list);
-        return (typeof list !== "string")?<ul>
-            {
-                list.map((product, i)=> {
-                    <li>
+        return (
+            <div>
+                <Form/>
+                <div>
+                    <ul>
+                        {(typeof db !== "string")?list.map((product, i)=> (
+                    <li key={product.ID}>
                     <span>
                         <strong>{product.title}</strong>
                     </span>
                         <div>{product.startDate}</div>
                         <div>{product.shelfLife}</div>
-                    </li>
-                })
-            }
-        </ul>:list;
+                    </li>)):db}
+                </ul>
+                </div>
+            </div>
+        );
+
+
     }
 }
 
