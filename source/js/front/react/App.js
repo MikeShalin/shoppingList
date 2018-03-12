@@ -4,8 +4,7 @@
 import React, {Component} from 'react';
 import socket from '../socket-connect/socket-connect';
 import Form from './Form';
-
-
+import Item from './Item';
 
 class App extends Component {
 
@@ -22,22 +21,27 @@ class App extends Component {
             console.log("В реакте поменяли стейт",this.state.db);
         });
     }
+    handleDone=(ID)=>{
+        socket.emit('handleDone',ID);
+        console.log("КЛикнули по элементу",ID);
+    };
     render() {
         const {db} = this.state;
-        console.log("render ",list);
+        console.log("render ",db);
         return (
             <div>
                 <Form/>
                 <div>
                     <ul>
-                        {(typeof db !== "string")?list.map((product, i)=> (
-                    <li key={product.ID}>
-                    <span>
-                        <strong>{product.title}</strong>
-                    </span>
-                        <div>{product.startDate}</div>
-                        <div>{product.shelfLife}</div>
-                    </li>)):db}
+                        {(typeof db !== "string")?db.map((product, i)=> (
+                        <Item key={product.ID}
+                              title={product.title}
+                              startDate={product.startDate}
+                              shelfLife={product.shelfLife}
+                              done={product.done}
+                              onChange={()=>{this.handleDone(product.ID)}}
+                        />
+                    )):db}
                 </ul>
                 </div>
             </div>
