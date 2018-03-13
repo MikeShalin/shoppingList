@@ -27,13 +27,14 @@ io.on("connection",function (socket) {
     console.log("Отправка данных на фронт");
     socket.emit("db",sql);
 
-    socket.on('handleDone',function (ID) {
-        db.query(`UPDATE product SET done=1 WHERE ID =${ID}`, function (error, result, fields) {
+    socket.on('handleDone',function (ID,done) {
+        db.query(`UPDATE product SET done=${!done} WHERE ID =${ID}`, function (error, result, fields) {
             if (result){
-                console.log(`результат обновления записи ok: `,result);
+                console.log(`результат обновления записи ok: `,!done);
+                socket.emit("updateDoneRow",{status:"ok",ID:ID})
             }
             if (error){
-                console.log(`результат обновления записи err: `,error);
+                console.log("updateDoneRow","err");
             }
         });
         console.log('-----------'); // Logging

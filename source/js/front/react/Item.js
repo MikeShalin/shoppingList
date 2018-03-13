@@ -9,14 +9,12 @@ class Item extends Component {
         onChange();
     };
     render(){
-        const{title,startDate,shelfLife,done}=this.props;
-        console.log("Я нахожусь в компоненте item чекнут ли",done)
+        const{title,startDate,shelfLife,done,ID}=this.props;
+        console.log("Я нахожусь в компоненте item чекнут ли",done);
         return (
             <li>
-                <input onChange={this.handleDone} type="checkbox" checked={done}/>
-                    <span>
-                        <strong>{title}</strong>
-                    </span>
+                <input id={ID} onChange={this.handleDone} type="checkbox" checked={done}/>
+                <label htmlFor={ID}>{title}</label>
                 <div>{startDate}</div>
                 <div>{shelfLife}</div>
             </li>
