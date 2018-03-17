@@ -10,7 +10,6 @@ class Item extends Component {
     };
     render(){
         const{title,startDate,shelfLife,done,ID}=this.props;
-        console.log("Я нахожусь в компоненте item чекнут ли",done);
         return (
             <li>
                 <input id={ID} onChange={this.handleDone} type="checkbox" checked={done}/>

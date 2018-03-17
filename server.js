@@ -1,8 +1,7 @@
 /**
  * Created by mike on 12.03.18.
  */
-const db = require("./source/js/mysql/connect.js"),
-      // sql = require("./source/js/mysql/sql.js"),
+const sql = require("./source/js/back/sql.js"),
       express = require("express"),
       app = express(),
       server = require("http").Server(app),
@@ -11,33 +10,20 @@ const db = require("./source/js/mysql/connect.js"),
 
 server.listen(port);
 console.log("Создание сервера");
-
-var sql = `SELECT * FROM product`;
-db.query(sql, function (error, result, fields) {
-    if (result){
-        sql = result;
-        console.log(`результат подключения к бд ok: `,sql);
-    }
-    if (error){
-        console.log(`результат подключения к бд err: ${error}`);
-    }
-});
-
-io.on("connection",function (socket) {
+io.on("connection",socket => {
     console.log("Отправка данных на фронт");
-    socket.emit("db",sql);
+    sql.query(sql.selectAll,(sql)=>socket.emit("db",sql));
 
-    socket.on('handleDone',function (ID,done) {
-        db.query(`UPDATE product SET done=${!done} WHERE ID =${ID}`, function (error, result, fields) {
-            if (result){
-                console.log(`результат обновления записи ok: `,!done);
-                socket.emit("updateDoneRow",{status:"ok",ID:ID})
-            }
-            if (error){
-                console.log("updateDoneRow","err");
-            }
-        });
-        console.log('-----------'); // Logging
+    socket.on('addNewProduct',data => {
+        const {title,startDate,shelfLife} = data;
+        sql.query(sql.insert(title,startDate,shelfLife),()=>
+            socket.emit("addNewProduct",{status:"ok",data:{
+                title:title,startDate:startDate,shelfLife:shelfLife
+            }}));
+    });
+    
+    socket.on('handleDone', (ID,done) =>{
+        sql.query(sql.checked(done,ID),()=>socket.emit("updateDoneRow",{status:"ok",ID:ID}));
         console.log('Получил ID купленного продукта', ID);
     })
 });

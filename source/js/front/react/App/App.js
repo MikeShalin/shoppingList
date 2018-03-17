@@ -2,9 +2,9 @@
  * Created by mike on 12.03.18.
  */
 import React, {Component} from 'react';
-import socket from '../socket-connect/socket-connect';
-import Form from './Form';
-import Item from './Item';
+import socket from '../../socket-connect/socket-connect';
+import Form from '../Form/Form';
+import Item from '../Item/Item';
 
 class App extends Component {
 
@@ -18,7 +18,6 @@ class App extends Component {
             this.setState({
                 db: res
             });
-            console.log("В реакте поменяли стейт",this.state.db);
         });
         socket.on("updateDoneRow",(res) => {
             const {db} = this.state;
@@ -37,17 +36,31 @@ class App extends Component {
                 });
             }
         });
+        socket.on("addNewProduct",(res) => {
+            const {db} = this.state,
+                  {title,startDate,shelfLife} = res.data;
+            console.log('state',db);
+            console.log('Новый продукт',res);
+            console.log("При добавлении нового продукта с бэка пришел ответ",res.status);
+            this.setState({
+                db: [...db, {title: title, startDate: startDate, shelfLife: shelfLife}]
+            });
+        });
     }
+    handleSubmit=(data)=>{
+        console.log("Находимся в компоненте app:", data);
+        socket.emit('addNewProduct',data);
+    };
     handleDone=(ID,done)=>{
         socket.emit('handleDone',ID,done);
-        console.log("КЛикнули по элементу",!done);
     };
     render() {
         const {db} = this.state;
-        console.log("render ",db);
         return (
             <div>
-                <Form/>
+                <Form
+                    onSubmit={this.handleSubmit}
+                />
                 <div>
                     <ul>
                         {(typeof db !== "string")?db.map((product, i)=> (

@@ -7,6 +7,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babelify": "^8.0.0",
+    "browser-sync": "^2.23.6",
     "browserify": "^16.1.1",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
@@ -23,8 +24,8 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "node server.js",
+    "build": "npm gulp",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "express": "^4.16.2",
