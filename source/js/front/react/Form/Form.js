@@ -2,40 +2,29 @@
  * Created by mike on 12.03.18.
  */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import FormActions from '../actions/Form/FormActions.js';
 
-class Form extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-            startDate: '',
-            shelfLife: ''
-        };
-
-    }
+export class Form extends Component {
 
     handleChange = (e)=> {
         const name = e.target.name,
-            value = e.target.value;
-        this.setState({
-            [name]: value
-        });
+            value = e.target.value,
+            {editFormField} = this.props;
+        editFormField(name,value);
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
-            const {onSubmit} = this.props;
-            onSubmit(this.state);
-            this.setState({
-                title: '',
-                startDate: '',
-                shelfLife: ''
-            });
+            const {onSubmit,formReset} = this.props;
+        // console.log(formReset);
+            onSubmit(this.props.form);
+        formReset();
     };
 
     render() {
-        const {title, startDate, shelfLife} = this.state;
-        
+        console.log('d форме',this.props.form);
+        const {title} = this.props.form;
         return (
             <form className="form" onSubmit={this.handleSubmit}>
                 <p>
@@ -47,33 +36,37 @@ class Form extends Component {
                                onChange={this.handleChange}/>
                     </label>
                 </p>
-                <p>
-                    <label className="label">
-                        Дата покупки:
-                        <input type="text"
-                               name="startDate"
-                               value={startDate}
-                               onChange={this.handleChange}
-                               placeholder="дд-мм"
-                        />
-                    </label>
-                </p>
-                <p>
-                    <label className="label">
-                        Примерный срок употребление (через сколько суток нужно
-                        оповестить о том что нужно купить снова):
-                        <input type="text"
-                               name="shelfLife"
-                               value={shelfLife}
-                               onChange={this.handleChange}/>
-                    </label>
-                </p>
-                <input type="submit" value="Submit" disabled={(this.state.title === '') || (this.state.startDate === '') || (this.state.shelfLife === '')}/>
+                
+                <input type="submit" value="Submit" disabled={title === ''}/>
             </form>
         );
     }
 
 }
 
-export default Form;
+const mapStateToProps = (state) =>{
+    return{
+        form:state.form
+    }
+};
 
+
+const mapDispatchToProps = (dispatch) =>{
+    const {editFormField,formReset,updateDoneRow,handleEdit} = FormActions;
+    return {
+        editFormField: (name,value) => {
+            dispatch(editFormField(name,value));
+        },
+        formReset: () => {
+            dispatch(formReset());
+        }
+        // handleEdit: (product) => {
+        //     dispatch(handleEdit(product));
+        // },
+        // updateDoneRow: (product) => {
+        //     dispatch(updateDoneRow(product));
+        // }
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Form);

@@ -2,66 +2,35 @@
  * Created by mike on 12.03.18.
  */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import socket from '../../socket-connect/socket-connect';
 import Form from '../Form/Form';
 import Item from '../Item/Item';
+import AppActions from '../actions/App/AppActions.js';
 
-class App extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state ={
-            db: "Нет списка продуктов",
-            change:{}
-        };
-
-    }
+export class App extends Component {
     componentWillMount() {
+        const {getProductList} = this.props;
         socket.on("db",(res) => {
-            this.setState({
-                db: res
-            });
+            getProductList(res);
         });
+       
         socket.on("updateDoneRow",(res) => {
-            const {db} = this.state;
-            let newState = {},
-                newProduct = {};
-            if(res.status === "ok"){
-                newProduct = db.filter(product => (
-                    (product.ID === res.ID)?product:false
-                ));
-                newProduct = newProduct[0];
-                newProduct.done = !newProduct.done;
-                newState = db.map(product => ((product.ID !== res.ID)?product:false));
-                newState = db.map(product => (product));
-                this.setState({
-                    db: newState
-                });
-            }
+            const {updateDoneRow} = this.props;
+            updateDoneRow(res.ID);
         });
 
         socket.on("addNewProduct",(res) => {
-            const {db} = this.state,
-                  {ID,title,startDate,shelfLife} = res.data;
-            console.log('state',db);
-            console.log('Новый продукт',res);
-            console.log("При добавлении нового продукта с бэка пришел ответ",res.status);
-            this.setState({
-                db: [...db, {ID:ID,title: title, startDate: startDate, shelfLife: shelfLife}]
-            });
+            const {ID,title,startDate,shelfLife} = res.data,
+                 {addNewProduct} = this.props;
+            addNewProduct({ID:ID,title: title, startDate: startDate, shelfLife: shelfLife});
         });
 
         socket.on("deleteProduct",(res)=>{
-            const {db} = this.state,
-                ID = res.ID;
-            let newState;
-            newState = db.filter(product => (
-                (product.ID !== ID)?product:false
-            ));
-            console.log("Все продукты",newState);
-
-            console.log("ID",ID);
-            this.setState({db:newState});
+            console.log("deleteProduct",res.ID);
+            const {deleteProduct} = this.props;
+            deleteProduct(res.ID);
         });
     }
     handleSubmit=(data)=>{
@@ -75,13 +44,14 @@ class App extends Component {
         socket.emit('handleDelete',ID);
         console.log("Я удаляю id:",ID);
     };
-    handleEdit =(params)=>{
-        this.setState({
-            change:params
-        });
+    handleEdit =(product)=>{
+        const {handleEdit} = this.props;
+        handleEdit(product);
     };
     render() {
-        const {db,change} = this.state;
+        const {productList,change} = this.props;
+
+
         return (
             <div>
                 <Form
@@ -90,7 +60,7 @@ class App extends Component {
                 />
                 <div>
                     <ul className="product-list">
-                        {(typeof db !== "string")?db.map((product, i)=> (
+                        {(typeof productList !== "string")?productList.map((product, i)=> (
                         <Item key={product.ID}
                               ID={product.ID}
                               title={product.title}
@@ -101,7 +71,7 @@ class App extends Component {
                               onChange={()=>{this.handleDone(product.ID,product.done)}}
                               onEdit={()=>{this.handleEdit(product)}}
                         />
-                    )):db}
+                    )):productList}
                 </ul>
                 </div>
             </div>
@@ -111,4 +81,32 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) =>{
+    return{
+        productList:state.app.productList,
+        change:state.app.change
+    }
+};
+
+const mapDispatchToProps = (dispatch) =>{
+    const {getProductList,addNewProduct,updateDoneRow,handleEdit,deleteProduct} = AppActions;
+    return {
+        getProductList: (productList) => {
+            dispatch(getProductList(productList));
+        },
+        addNewProduct: (product) => {
+            dispatch(addNewProduct(product));
+        },
+        handleEdit: (product) => {
+            dispatch(handleEdit(product));
+        },
+        updateDoneRow: (ID) => {
+            dispatch(updateDoneRow(ID));
+        },
+        deleteProduct: (ID) => {
+            dispatch(deleteProduct(ID));
+        }
+    }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

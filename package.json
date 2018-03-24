@@ -23,10 +23,13 @@
     "mysql": "^2.15.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
+    "redux": "^3.7.2",
     "socket.io": "^2.0.4",
-    "vinyl-source-stream": "^2.0.0"
+    "vinyl-source-stream": "^2.0.0",
+    "zingtouch": "^1.0.5"
   },
   "scripts": {
     "start": "node server.js",
