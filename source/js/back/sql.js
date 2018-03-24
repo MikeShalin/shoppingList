@@ -10,6 +10,7 @@ module.exports ={
     {
             return `INSERT INTO product(title, startDate, shelfLife, done) VALUES ('${title}', '${startDate}', '${shelfLife}', 0)`
     },
+    onDelete:(ID)=>{return `DELETE FROM product WHERE ID=${ID}`},
     query: (sql,callback)=>{
         db.query(sql, (error, result, fields) =>  {
             if (result){

@@ -16,14 +16,18 @@ io.on("connection",socket => {
 
     socket.on('addNewProduct',data => {
         const {title,startDate,shelfLife} = data;
-        sql.query(sql.insert(title,startDate,shelfLife),()=>
+        sql.query(sql.insert(title,startDate,shelfLife),(res)=>
             socket.emit("addNewProduct",{status:"ok",data:{
-                title:title,startDate:startDate,shelfLife:shelfLife
+                ID:res.insertId,title:title,startDate:startDate,shelfLife:shelfLife
             }}));
     });
     
     socket.on('handleDone', (ID,done) =>{
         sql.query(sql.checked(done,ID),()=>socket.emit("updateDoneRow",{status:"ok",ID:ID}));
         console.log('Получил ID купленного продукта', ID);
-    })
+    });
+    
+    socket.on('handleDelete', ID => {
+        sql.query(sql.onDelete(ID),()=>socket.emit("deleteProduct",{status:"ok",ID:ID}))
+    });
 });

@@ -7,7 +7,24 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync'),
     reload  = browserSync.reload,
     source = require('vinyl-source-stream'),
+    less = require('gulp-less'),
+    minifyCSS = require('gulp-minify-css'),
+    autoprefixer = require('gulp-autoprefixer'),
     glob = require('glob');
+
+// less compile and minify
+gulp.task('less', function () {
+    gulp.src('source/less/style.less')
+        .pipe(less())
+        .pipe(autoprefixer({
+            browsers: ['last 3 version'],
+            cascade: false
+        }))
+        .pipe(minifyCSS())
+        .pipe(concat('public/style.css'))
+        .pipe(reload({stream: true}))
+        .pipe(gulp.dest('.'));
+});
 
 gulp.task('build', function () {
     var appFiles = glob.sync('source/js/front/**/*.js');
@@ -37,7 +54,9 @@ gulp.task('browserSync', function() {
 
 // start task gulp watch
 gulp.task('default', function() {
+    gulp.start('less');
     gulp.start('build');
     gulp.start('browserSync');
     gulp.watch('source/js/front/**/*.js', ['build']);
+    gulp.watch('source/less/**/*.less', ['less']);
 });

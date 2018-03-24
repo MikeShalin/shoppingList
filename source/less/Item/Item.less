@@ -1,0 +1,23 @@
+.Item{
+  //display: inline-block;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid @product-border;
+  border-radius: 5px;
+  padding: 12px;
+  &:hover{
+    background: @product-hover-bgr;
+  }
+  &__close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    border: 1px solid gainsboro;
+    border-radius: 2px;
+    cursor: pointer;
+    &:hover{
+      background: gainsboro;
+    }
+  }
+}

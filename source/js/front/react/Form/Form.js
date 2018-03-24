@@ -24,42 +24,51 @@ class Form extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const {onSubmit} = this.props;
-        onSubmit(this.state);
-        this.setState({
-            title: '',
-            startDate: '',
-            shelfLife: ''
-        });
+            const {onSubmit} = this.props;
+            onSubmit(this.state);
+            this.setState({
+                title: '',
+                startDate: '',
+                shelfLife: ''
+            });
     };
 
     render() {
         const {title, startDate, shelfLife} = this.state;
+        
         return (
             <form className="form" onSubmit={this.handleSubmit}>
                 <p>
                     <label className="label">
                         Название продукта:
-                        <input type="text" name="title" value={title}
+                        <input type="text"
+                               name="title"
+                               value={title}
                                onChange={this.handleChange}/>
                     </label>
                 </p>
                 <p>
                     <label className="label">
                         Дата покупки:
-                        <input type="text" name="startDate" value={startDate}
-                               onChange={this.handleChange}/>
+                        <input type="text"
+                               name="startDate"
+                               value={startDate}
+                               onChange={this.handleChange}
+                               placeholder="дд-мм"
+                        />
                     </label>
                 </p>
                 <p>
                     <label className="label">
                         Примерный срок употребление (через сколько суток нужно
                         оповестить о том что нужно купить снова):
-                        <input type="text" name="shelfLife" value={shelfLife}
+                        <input type="text"
+                               name="shelfLife"
+                               value={shelfLife}
                                onChange={this.handleChange}/>
                     </label>
                 </p>
-                <input type="submit" value="Submit"/>
+                <input type="submit" value="Submit" disabled={(this.state.title === '') || (this.state.startDate === '') || (this.state.shelfLife === '')}/>
             </form>
         );
     }

@@ -10,7 +10,10 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state ={db: "Нет списка продуктов"};
+        this.state ={
+            db: "Нет списка продуктов",
+            change:{}
+        };
 
     }
     componentWillMount() {
@@ -36,15 +39,29 @@ class App extends Component {
                 });
             }
         });
+
         socket.on("addNewProduct",(res) => {
             const {db} = this.state,
-                  {title,startDate,shelfLife} = res.data;
+                  {ID,title,startDate,shelfLife} = res.data;
             console.log('state',db);
             console.log('Новый продукт',res);
             console.log("При добавлении нового продукта с бэка пришел ответ",res.status);
             this.setState({
-                db: [...db, {title: title, startDate: startDate, shelfLife: shelfLife}]
+                db: [...db, {ID:ID,title: title, startDate: startDate, shelfLife: shelfLife}]
             });
+        });
+
+        socket.on("deleteProduct",(res)=>{
+            const {db} = this.state,
+                ID = res.ID;
+            let newState;
+            newState = db.filter(product => (
+                (product.ID !== ID)?product:false
+            ));
+            console.log("Все продукты",newState);
+
+            console.log("ID",ID);
+            this.setState({db:newState});
         });
     }
     handleSubmit=(data)=>{
@@ -54,15 +71,25 @@ class App extends Component {
     handleDone=(ID,done)=>{
         socket.emit('handleDone',ID,done);
     };
+    handleDelete =(ID)=>{
+        socket.emit('handleDelete',ID);
+        console.log("Я удаляю id:",ID);
+    };
+    handleEdit =(params)=>{
+        this.setState({
+            change:params
+        });
+    };
     render() {
-        const {db} = this.state;
+        const {db,change} = this.state;
         return (
             <div>
                 <Form
                     onSubmit={this.handleSubmit}
+                    changeProductParams={change}
                 />
                 <div>
-                    <ul>
+                    <ul className="product-list">
                         {(typeof db !== "string")?db.map((product, i)=> (
                         <Item key={product.ID}
                               ID={product.ID}
@@ -70,7 +97,9 @@ class App extends Component {
                               startDate={product.startDate}
                               shelfLife={product.shelfLife}
                               done={product.done}
+                              onDelete={()=>this.handleDelete(product.ID)}
                               onChange={()=>{this.handleDone(product.ID,product.done)}}
+                              onEdit={()=>{this.handleEdit(product)}}
                         />
                     )):db}
                 </ul>
