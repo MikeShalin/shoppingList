@@ -6,9 +6,9 @@ const db = require("./connect.js");
 module.exports ={
     selectAll:`SELECT * FROM product`,
     checked:(done,ID)=>{return `UPDATE product SET done=${!done} WHERE ID =${ID}`},
-    insert:(title,startDate,shelfLife)=>
+    insert:(title)=>
     {
-            return `INSERT INTO product(title, startDate, shelfLife, done) VALUES ('${title}', '${startDate}', '${shelfLife}', 0)`
+            return `INSERT INTO product(title, done) VALUES ('${title}', 0)`
     },
     onDelete:(ID)=>{return `DELETE FROM product WHERE ID=${ID}`},
     query: (sql,callback)=>{

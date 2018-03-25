@@ -1,0 +1,44 @@
+.form {
+  background-color: @form-bgr;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+  &__title{
+    margin: 5px;
+  }
+  &__input {
+    border: none;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+    border-radius: 0;
+    &:focus{
+      border: 0;
+    }
+  }
+  &__container{
+    display: flex;
+  }
+  &__submit{
+    padding: 10px;
+    width: 25%;
+    background: @submit-bgr;
+    color: @submit-clr;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+    &:disabled {
+      background: @submit-disabled-bgr;
+      color: @submit-disabled-clr;
+    }
+    &:hover{
+      background-color: @submit-hover-bgr;
+    }
+  }
+}

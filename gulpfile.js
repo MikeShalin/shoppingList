@@ -22,8 +22,8 @@ gulp.task('less', function () {
         }))
         .pipe(minifyCSS())
         .pipe(concat('public/style.css'))
-        .pipe(reload({stream: true}))
-        .pipe(gulp.dest('.'));
+        .pipe(gulp.dest('.'))
+        .pipe(reload({stream: true}));
 });
 
 gulp.task('build', function () {

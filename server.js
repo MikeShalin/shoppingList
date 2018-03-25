@@ -15,10 +15,10 @@ io.on("connection",socket => {
     sql.query(sql.selectAll,(sql)=>socket.emit("db",sql));
 
     socket.on('addNewProduct',data => {
-        const {title,startDate,shelfLife} = data;
-        sql.query(sql.insert(title,startDate,shelfLife),(res)=>
+        const {title} = data;
+        sql.query(sql.insert(title),(res)=>
             socket.emit("addNewProduct",{status:"ok",data:{
-                ID:res.insertId,title:title,startDate:startDate,shelfLife:shelfLife
+                ID:res.insertId,title:title
             }}));
     });
     

@@ -24,9 +24,9 @@ class Item extends Component {
         const{title,done,ID,onDelete,onEdit}=this.props;
         return (
             <li className="Item" onClick={()=>{onEdit(title,done,ID)}} id={"item_list_" + ID}>
-                <input id={ID} onChange={this.handleDone} type="checkbox" checked={done}/>
+                {/* <input id={ID} onChange={this.handleDone} type="checkbox" checked={done}/>*/}
                 <label htmlFor={ID}>{title}</label>
-                <span onClick={onDelete} className="Item__close">X</span>
+                <span onClick={onDelete} className="Item__close">×</span>
             </li>
         )
     }

@@ -27,17 +27,22 @@ export class Form extends Component {
         const {title} = this.props.form;
         return (
             <form className="form" onSubmit={this.handleSubmit}>
-                <p>
-                    <label className="label">
-                        Название продукта:
-                        <input type="text"
-                               name="title"
-                               value={title}
-                               onChange={this.handleChange}/>
-                    </label>
-                </p>
-                
-                <input type="submit" value="Submit" disabled={title === ''}/>
+                <h2 className="form__title">List of products</h2>
+                   <div className="form__container">
+                       <input type="text"
+                              name="title"
+                              value={title}
+                              onChange={this.handleChange}
+                              placeholder="Product name"
+                              className="form__input"
+                       />
+                       <input
+                           type="submit"
+                           value="Add"
+                           disabled={title === ''}
+                           className="form__submit"
+                       />
+                   </div>
             </form>
         );
     }
