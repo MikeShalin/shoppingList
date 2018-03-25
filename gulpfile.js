@@ -43,7 +43,7 @@ gulp.task('build', function () {
 gulp.task('browserSync', function() {
     browserSync.init({
         server: {
-            baseDir: "./public/"
+            baseDir: "./public_html/"
         },
         port: 8080,
         open: true,
