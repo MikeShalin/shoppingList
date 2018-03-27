@@ -21,7 +21,7 @@ gulp.task('less', function () {
             cascade: false
         }))
         .pipe(minifyCSS())
-        .pipe(concat('public/style.css'))
+        .pipe(concat('public_html/style.css'))
         .pipe(gulp.dest('.'))
         .pipe(reload({stream: true}));
 });
@@ -35,7 +35,7 @@ gulp.task('build', function () {
             debug: true})
         .transform("babelify", {presets:['es2015', "stage-2",'react']})
         .bundle()
-        .pipe(source('public/bundle.js'))
+        .pipe(source('public_html/bundle.js'))
         .pipe(gulp.dest('.'))
         .pipe(reload({stream:true}));
 
