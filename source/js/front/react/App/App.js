@@ -7,6 +7,7 @@ import socket from '../../socket-connect/socket-connect';
 import Form from '../Form/Form';
 import Item from '../Item/Item';
 import AppActions from '../actions/App/AppActions.js';
+import Hammer from '../../touch/hammer.min.js';
 
 
 export class App extends Component {
@@ -32,6 +33,12 @@ export class App extends Component {
             const {deleteProduct} = this.props;
             deleteProduct(res.ID);
         });
+        let element = document.getElementById("root");
+        const mc = new Hammer(element);
+        mc.on("swipedown", function(ev) {
+            location.reload();
+        });
+
     }
     handleSubmit=(data)=>{
         console.log("Находимся в компоненте app:", data);
