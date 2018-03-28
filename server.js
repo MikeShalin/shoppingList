@@ -13,21 +13,21 @@ console.log("Создание сервера");
 io.on("connection",socket => {
     console.log("Отправка данных на фронт");
     sql.query(sql.selectAll,(sql)=>socket.emit("db",sql));
-
+    
     socket.on('addNewProduct',data => {
         const {title} = data;
         sql.query(sql.insert(title),(res)=>
-            socket.emit("addNewProduct",{status:"ok",data:{
+            io.sockets.emit("addNewProduct",{status:"ok",data:{
                 ID:res.insertId,title:title
             }}));
     });
     
     socket.on('handleDone', (ID,done) =>{
-        sql.query(sql.checked(done,ID),()=>socket.emit("updateDoneRow",{status:"ok",ID:ID}));
+        sql.query(sql.checked(done,ID),()=>io.sockets.emit("updateDoneRow",{status:"ok",ID:ID}));
         console.log('Получил ID купленного продукта', ID);
     });
     
     socket.on('handleDelete', ID => {
-        sql.query(sql.onDelete(ID),()=>socket.emit("deleteProduct",{status:"ok",ID:ID}))
+        sql.query(sql.onDelete(ID),()=>io.sockets.emit("deleteProduct",{status:"ok",ID:ID}))
     });
 });

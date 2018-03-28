@@ -9,4 +9,3 @@ module.exports = mysql.createConnection({
     database : 'shoppingList'
 });
 
-
