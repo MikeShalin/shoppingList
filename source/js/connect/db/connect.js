@@ -3,9 +3,9 @@
  */
 const mysql = require('mysql');
 module.exports = mysql.createConnection({
-    host     : '127.0.0.1',
-    user     : 'root', //mikeshalin_shop
-    password : 'root', //1Ayei&0d
-    database : 'shoppingList'
+    host     : 'localhost',
+    user     : 'root',
+    password : 'hBCm3IAnQj', //hBCm3IAnQj
+    database : 'shoppinglist' //shoppinglist
 });
 
