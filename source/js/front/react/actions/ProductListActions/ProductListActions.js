@@ -1,7 +1,7 @@
 /**
  * Created by mike on 24.03.18.
  */
-export const App = {
+export const productList = {
     addNewProduct:(product)=>{
         return {
             type: 'ADD_NEW_PRODUCT',
@@ -18,11 +18,11 @@ export const App = {
             }
         }
     },
-    getProductList:(productList)=>{
+    getProductList:(products)=>{
         return {
             type: 'GET_PRODUCT_LIST',
             payload: {
-                productList:productList
+                products:products
             }
         }
     },
@@ -43,4 +43,4 @@ export const App = {
         }
     }
 };
-export default App;
+export default productList;

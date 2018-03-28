@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import FormActions from '../actions/Form/FormActions.js';
 
-export class Form extends Component {
+export class ProductForm extends Component {
 
     handleChange = (e)=> {
         const name = e.target.name,
@@ -74,4 +74,4 @@ const mapDispatchToProps = (dispatch) =>{
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Form);
+export default connect(mapStateToProps,mapDispatchToProps)(ProductForm);

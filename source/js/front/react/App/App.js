@@ -1,119 +1,60 @@
 /**
- * Created by mike on 12.03.18.
+ * Created by mike on 28.03.18.
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import socket from '../../../connect/socket-connect/socket-connect';
-import Form from '../Form/Form';
-import Item from '../Item/Item';
-import AppActions from '../actions/App/AppActions.js';
-import Hammer from '../../touch/hammer.min.js';
-
+import {Switch,Route,Link,Redirect} from 'react-router-dom';
+import ProductList from '../ProductList';
+import Registration from '../Registration';
+import Auth from '../Auth';
 
 export class App extends Component {
-    componentWillMount() {
-        const {getProductList} = this.props;
-        socket.on("db",(res) => {
-            getProductList(res);
-        });
-       
-        socket.on("updateDoneRow",(res) => {
-            const {updateDoneRow} = this.props;
-            updateDoneRow(res.ID);
-        });
 
-        socket.on("addNewProduct",(res) => {
-            const {ID,title,startDate,shelfLife} = res.data,
-                 {addNewProduct} = this.props;
-            addNewProduct({ID:ID,title: title, startDate: startDate, shelfLife: shelfLife});
-        });
-
-        socket.on("deleteProduct",(res)=>{
-            console.log("deleteProduct",res.ID);
-            const {deleteProduct} = this.props;
-            deleteProduct(res.ID);
-        });
-        let main = document.getElementById("root");
-        const mc = new Hammer(main);
-        mc.on("pandown", function(ev) {
-            console.log('wow');
-            location.reload();
-        });
-
-    }
-    handleSubmit=(data)=>{
-        console.log("Находимся в компоненте app:", data);
-        socket.emit('addNewProduct',data);
-    };
-    handleDone=(ID,done)=>{
-        socket.emit('handleDone',ID,done);
-    };
-    handleDelete =(ID)=>{
-        socket.emit('handleDelete',ID);
-        console.log("Я удаляю id:",ID);
-    };
-    handleEdit =(product)=>{
-        const {handleEdit} = this.props;
-        handleEdit(product);
-    };
     render() {
-        const {productList,change} = this.props;
-
+        const {auth} = this.props;
+        console.log("Компонента app auth:",auth);
 
         return (
             <div>
-                <Form
-                    onSubmit={this.handleSubmit}
-                    changeProductParams={change}
-                />
-                <div>
-                    <ul className="product-list">
-                        {(typeof productList !== "string")?productList.map((product, i)=> (
-                        <Item key={product.ID}
-                              ID={product.ID}
-                              title={product.title}
-                              startDate={product.startDate}
-                              shelfLife={product.shelfLife}
-                              done={product.done}
-                              onDelete={()=>this.handleDelete(product.ID)}
-                              onChange={()=>{this.handleDone(product.ID,product.done)}}
-                              onEdit={()=>{this.handleEdit(product)}}
-                        />
-                    )):productList}
+                <ul>
+                    <li><Link to="/" component="ProductList">Product list</Link></li>
+                    <li><Link to="/auth" component="Auth">Auth</Link></li>
+                    <li><Link to="/reg" component="Registration">Registration</Link></li>
                 </ul>
-                </div>
+                <Switch>
+                    <Route path="/" exact component={ProductList}/>
+                    <Route path="/auth" component={Auth}/>
+                    <Route path="/reg" component={Registration}/>
+                    {/*<Redirect from={auth?"/":"*"} to="/auth"/>*/}
+                </Switch>
             </div>
-        );
-
-
+        )
     }
 }
 
 const mapStateToProps = (state) =>{
     return{
-        productList:state.app.productList,
-        change:state.app.change
+        auth:state.auth
     }
 };
 
 const mapDispatchToProps = (dispatch) =>{
-    const {getProductList,addNewProduct,updateDoneRow,handleEdit,deleteProduct} = AppActions;
     return {
-        getProductList: (productList) => {
-            dispatch(getProductList(productList));
-        },
-        addNewProduct: (product) => {
-            dispatch(addNewProduct(product));
-        },
-        handleEdit: (product) => {
-            dispatch(handleEdit(product));
-        },
-        updateDoneRow: (ID) => {
-            dispatch(updateDoneRow(ID));
-        },
-        deleteProduct: (ID) => {
-            dispatch(deleteProduct(ID));
-        }
+        // getProductList: (productList) => {
+        //     dispatch(getProductList(productList));
+        // },
+        // addNewProduct: (product) => {
+        //     dispatch(addNewProduct(product));
+        // },
+        // handleEdit: (product) => {
+        //     dispatch(handleEdit(product));
+        // },
+        // updateDoneRow: (ID) => {
+        //     dispatch(updateDoneRow(ID));
+        // },
+        // deleteProduct: (ID) => {
+        //     dispatch(deleteProduct(ID));
+        // }
     }
 };
 
