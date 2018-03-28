@@ -1,7 +1,7 @@
 /**
  * Created by mike on 12.03.18.
  */
-const db = require("./connect.js");
+const db = require("../connect/db/connect.js");
 
 module.exports ={
     selectAll:`SELECT * FROM product`,

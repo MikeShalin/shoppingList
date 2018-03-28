@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import socket from '../../socket-connect/socket-connect';
+import socket from '../../../connect/socket-connect/socket-connect';
 import Form from '../Form/Form';
 import Item from '../Item/Item';
 import AppActions from '../actions/App/AppActions.js';

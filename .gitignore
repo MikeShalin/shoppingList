@@ -1,4 +1,4 @@
 .idea
 node_modules
 package-lock.json
-source/js/back/connect.js
+source/js/connect/
