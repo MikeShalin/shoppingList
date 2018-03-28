@@ -5,14 +5,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 
-export class Registration extends Component{
-    handleSubmit = () =>{
-      console.log("Компонент Registration отправка формы")
-    };
+export class Registration extends Component {
+
     render(){
         return (
             <form className="form" >
-                <h2 className="form__title">лол</h2>
+                <h2 className="form__title">{console.log(this.props)}</h2>
                 <div className="form__container">
                     <input type="email"
                            name="email"
