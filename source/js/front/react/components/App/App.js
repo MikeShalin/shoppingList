@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
-import ProductList from '../ProductList';
-import Registration from '../Registration';
-import Auth from '../Auth';
+import ProductList from '../ProductList/index';
+import Registration from '../Registration/index';
+import Auth from '../Auth/index';
 
 export class App extends Component {
 
@@ -22,9 +22,9 @@ export class App extends Component {
                     <li><Link to="/reg" component="Registration">Registration</Link></li>
                 </ul>
                 <Switch>
-                    <Route path="/" exact component={ProductList}/>
+                    <Route path="/" exact component={Registration}/>
                     <Route path="/auth" component={Auth}/>
-                    <Route path="/reg" component={Registration}/>
+                    <Route path="/reg" component={ProductList}/>
                     {/*<Redirect from={auth?"/":"*"} to="/auth"/>*/}
                 </Switch>
             </div>

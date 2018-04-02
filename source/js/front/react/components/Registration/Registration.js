@@ -3,18 +3,18 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ProductList} from "../ProductList/ProductList";
 import {withRouter} from "react-router-dom";
 
 
 export class Registration extends Component{
-    handleSubmit = () =>{
+    handleSubmit = (e) =>{
+        e.preventDefault();
       console.log("Компонент Registration отправка формы")
     };
     render(){
         return (
             <form className="form" >
-                <h2 className="form__title">лол</h2>
+                <h2 className="form__title">Registration</h2>
                 <div className="form__container">
                     <input type="email"
                            name="email"

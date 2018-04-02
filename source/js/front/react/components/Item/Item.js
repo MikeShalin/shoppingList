@@ -2,7 +2,7 @@
  * Created by mike on 12.03.18.
  */
 import React, {Component} from 'react';
-import Hammer from '../../touch/hammer.min.js';
+import Hammer from '../../../touch/hammer.min.js';
 
 class Item extends Component {
 
