@@ -3,6 +3,8 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {ProductList} from "../ProductList/ProductList";
+import {withRouter} from "react-router-dom";
 
 
 export class Registration extends Component{
@@ -66,4 +68,4 @@ const mapDispatchToProps = (dispatch) =>{
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Registration);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Registration));

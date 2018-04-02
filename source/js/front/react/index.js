@@ -12,7 +12,7 @@ const store = createStore();
 ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
-            <ProductList />
+            <App />
         </Provider>
     </BrowserRouter>,
   document.getElementById('root')

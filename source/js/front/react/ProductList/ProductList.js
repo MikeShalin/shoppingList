@@ -8,6 +8,8 @@ import ProductForm from '../ProductForm/ProductForm';
 import Item from '../Item/Item';
 import ProductListActions from '../actions/ProductListActions/ProductListActions.js';
 import Hammer from '../../touch/hammer.min.js';
+import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
+import {App} from "../App/App";
 
 
 export class ProductList extends Component {
@@ -114,4 +116,5 @@ const mapDispatchToProps = (dispatch) =>{
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ProductList);
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(ProductList));

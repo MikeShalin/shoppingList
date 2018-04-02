@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Switch,Route,Link,Redirect} from 'react-router-dom';
+import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
 import ProductList from '../ProductList';
 import Registration from '../Registration';
 import Auth from '../Auth';
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch) =>{
     }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));
