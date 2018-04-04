@@ -29,7 +29,8 @@
     "redux": "^3.7.2",
     "socket.io": "^2.0.4",
     "vinyl-source-stream": "^2.0.0",
-    "zingtouch": "^1.0.5"
+    "zingtouch": "^1.0.5",
+    "redux-actions": "^2.2.1"
   },
   "scripts": {
     "start": "node server.js",

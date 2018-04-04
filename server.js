@@ -15,10 +15,10 @@ io.on("connection",socket => {
     sql.query(sql.selectAll,(sql)=>socket.emit("db",sql));
     
     socket.on('addNewProduct',data => {
-        const {title} = data;
-        sql.query(sql.insert(title),(res)=>
+        console.log('Новый продукт:',data);
+        sql.query(sql.insert(data),(res)=>
             io.sockets.emit("addNewProduct",{status:"ok",data:{
-                ID:res.insertId,title:title
+                ID:res.insertId,title:data
             }}));
     });
     
@@ -28,6 +28,12 @@ io.on("connection",socket => {
     });
     
     socket.on('handleDelete', ID => {
+        console.log('Удалил  продукт:',ID);
         sql.query(sql.onDelete(ID),()=>io.sockets.emit("deleteProduct",{status:"ok",ID:ID}))
     });
+
+//    Получаю данные о пользователе
+    socket.on('getAuth', user => {
+        sql.query(sql.getAuthUsers(user.login,user.password),(sql)=>socket.emit("db",sql))
+    })
 });

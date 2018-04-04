@@ -17,14 +17,14 @@ export class App extends Component {
         return (
             <div>
                 <ul>
-                    <li><Link to="/" component="ProductList">Product list</Link></li>
-                    <li><Link to="/auth" component="Auth">Auth</Link></li>
+                    <li><Link to="/" component="Auth">Auth</Link></li>
+                    <li><Link to="/ProductList" component="ProductList">Product list</Link></li>
                     <li><Link to="/reg" component="Registration">Registration</Link></li>
                 </ul>
                 <Switch>
-                    <Route path="/" exact component={Registration}/>
-                    <Route path="/auth" component={Auth}/>
-                    <Route path="/reg" component={ProductList}/>
+                    <Route path="/" exact component={Auth}/>
+                    <Route path="/ProductList"  component={ProductList}/>
+                    <Route path="/reg" component={Registration}/>
                     {/*<Redirect from={auth?"/":"*"} to="/auth"/>*/}
                 </Switch>
             </div>

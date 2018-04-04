@@ -6,17 +6,18 @@ import {connect} from 'react-redux';
 import socket from '../../../../connect/socket-connect/socket-connect';
 import ProductForm from '../ProductForm/ProductForm';
 import Item from '../Item/Item';
-import ProductListActions from '../../actions/ProductListActions/ProductListActions.js';
+import {
+    getProducts,addNewProduct,updateDoneRow,deleteProduct,replaceProductInForm
+} from '../../actions/ProductListActions/ProductListActions.js';
 import Hammer from '../../../touch/hammer.min.js';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
-import {App} from "../App/App";
 
 
 export class ProductList extends Component {
     componentWillMount() {
-        const {getProductList} = this.props;
+        const {getProducts} = this.props;
         socket.on("db",(res) => {
-            getProductList(res);
+            getProducts(res);
         });
        
         socket.on("updateDoneRow",(res) => {
@@ -55,11 +56,12 @@ export class ProductList extends Component {
         console.log("Я удаляю id:",ID);
     };
     handleEdit =(product)=>{
-        const {handleEdit} = this.props;
-        handleEdit(product);
+        const {replaceProductInForm} = this.props;
+        replaceProductInForm(product);
     };
     render() {
         const {products,change} = this.props;
+        console.log(products);
         return (
             <div>
                 <ProductForm
@@ -68,7 +70,7 @@ export class ProductList extends Component {
                 />
                 <div>
                     <ul className="product-list">
-                        {(typeof products !== "string")?products.map((product, i)=> (
+                        {products?products.map((product, i)=> (
                         <Item key={product.ID}
                               ID={product.ID}
                               title={product.title}
@@ -90,22 +92,21 @@ export class ProductList extends Component {
 const mapStateToProps = (state) =>{
     console.log("mapStateToProps",state);
     return{
-        products:state.productList.products,
-        change:state.productList.change
+        products:state.products,
+        // change:state.productList.change
     }
 };
 
 const mapDispatchToProps = (dispatch) =>{
-    const {getProductList,addNewProduct,updateDoneRow,handleEdit,deleteProduct} = ProductListActions;
     return {
-        getProductList: (productList) => {
-            dispatch(getProductList(productList));
+        getProducts: (productList) => {
+            dispatch(getProducts(productList));
         },
         addNewProduct: (product) => {
             dispatch(addNewProduct(product));
         },
-        handleEdit: (product) => {
-            dispatch(handleEdit(product));
+        replaceProductInForm: (product) => {
+            dispatch(replaceProductInForm(product));
         },
         updateDoneRow: (ID) => {
             dispatch(updateDoneRow(ID));

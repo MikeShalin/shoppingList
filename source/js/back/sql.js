@@ -5,6 +5,7 @@ const db = require("../connect/db/connect.js");
 
 module.exports ={
     selectAll:`SELECT * FROM product`,
+    getAuthUsers: (login,password) => {return `SELECT COUNT(*) AS C FROM users WHERE login = ${login} AND password = ${password}`},
     checked:(done,ID)=>{return `UPDATE product SET done=${!done} WHERE ID =${ID}`},
     insert:(title)=>
     {
