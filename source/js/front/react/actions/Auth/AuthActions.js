@@ -5,17 +5,18 @@ import {createActions} from 'redux-actions';
 
 export const {
     authRequest: authRequest,
+    authExitRequest: authExitRequest,
     authSuccess: authSuccess,
     authFailure: authFailure,
-    loginEnter: loginEnter,
-    passwordEnter: passwordEnter,
 } = createActions({
 
     AUTH_REQUEST: logIn =>logIn,
 
-    AUTH_SUCCESS: undefined,
+    AUTH_EXIT_REQUEST: undefined,
 
-    AUTH_FAILURE: undefined,
+    AUTH_SUCCESS: bool => bool,
+
+    AUTH_FAILURE: bool => bool,
 
     PASSWORD_ENTER: password => password,
 

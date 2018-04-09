@@ -4,29 +4,29 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
-import ProductList from '../ProductList/index';
-import Registration from '../Registration/index';
-import Auth from '../Auth/index';
+import SwitcherLogIn from '../SwitcherLogIn/';
+import SwitcherAuth from '../SwitcherAuth/';
+import {authFailure, authSuccess} from "../../actions/Auth/AuthActions";
 
 export class App extends Component {
+    componentDidMount(){
+        const {authSuccess,authFailure} = this.props,
+              userID = localStorage.getItem('userID');
+        if (userID){
+            authSuccess({ID:userID});
+            authFailure(false);
+        }
+    }
 
     render() {
-        const {auth} = this.props;
-        console.log("Компонента app auth:",auth);
-
+        const {AuthSuccess} = this.props;
+        console.log(AuthSuccess);
         return (
             <div>
-                <ul>
-                    <li><Link to="/" component="Auth">Auth</Link></li>
-                    <li><Link to="/ProductList" component="ProductList">Product list</Link></li>
-                    <li><Link to="/reg" component="Registration">Registration</Link></li>
-                </ul>
-                <Switch>
-                    <Route path="/" exact component={Auth}/>
-                    <Route path="/ProductList"  component={ProductList}/>
-                    <Route path="/reg" component={Registration}/>
-                    {/*<Redirect from={auth?"/":"*"} to="/auth"/>*/}
-                </Switch>
+                <div>
+                    {AuthSuccess?<SwitcherLogIn/>:<SwitcherAuth/>}
+                </div>
+
             </div>
         )
     }
@@ -34,18 +34,18 @@ export class App extends Component {
 
 const mapStateToProps = (state) =>{
     return{
-        auth:state.auth
+        AuthSuccess:state.AuthSuccess
     }
 };
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        // getProductList: (productList) => {
-        //     dispatch(getProductList(productList));
-        // },
-        // addNewProduct: (product) => {
-        //     dispatch(addNewProduct(product));
-        // },
+        authSuccess: (user) => {
+            dispatch(authSuccess(user));
+        },
+        authFailure: (bool) => {
+            dispatch(authFailure(bool));
+        },
         // handleEdit: (product) => {
         //     dispatch(handleEdit(product));
         // },

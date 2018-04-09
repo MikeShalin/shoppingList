@@ -7,30 +7,37 @@ import {editFormField,formReset} from '../../actions/Form/FormActions.js';
 
 export class ProductForm extends Component {
 
-    handleChange = (e)=> {
-        const value = e.target.value,
-            {editFormField} = this.props;
-        editFormField(value);
-    };
-
+    constructor(props){
+        super(props);
+        this.state = {
+            product:''
+        }
+    }
     handleSubmit = (e) => {
         e.preventDefault();
-            const {onSubmit,formReset,form} = this.props;
-        console.log('Перед отправкой формы ',form);
-        onSubmit(form);
-        formReset();
+        const {onSubmit} = this.props;
+        onSubmit(this.state);
+        this.setState({
+            product:''
+        });
+    };
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        });
     };
 
     render() {
         console.log('d форме',this.props.form);
-        const {form} = this.props;
+        const {form} = this.props,
+              {product} = this.state;
         return (
             <form className="form" onSubmit={this.handleSubmit}>
                 <h2 className="form__title">List of products</h2>
                    <div className="form__container">
                        <input type="text"
-                              name="title"
-                              value={form}
+                              name="product"
+                              value={product}
                               onChange={this.handleChange}
                               placeholder="Product name"
                               className="form__input"
@@ -38,7 +45,7 @@ export class ProductForm extends Component {
                        <input
                            type="submit"
                            value="Add"
-                           disabled={form === ''}
+                           disabled={product === ''}
                            className="form__submit"
                        />
                    </div>

@@ -1,8 +1,7 @@
 import {
-    authRequest,
-    authSuccess,
-    authFailure,
-} from '../../actions/Auth/AuthActions.js';
+    registrationSuccess,
+    registrationFailure
+} from '../../actions/Registration/RegistrationActions';
 import {handleAction, handleActions} from 'redux-actions';
 
 // export const AuthLogin = handleAction(
@@ -17,14 +16,14 @@ import {handleAction, handleActions} from 'redux-actions';
 //     ""
 // );
 
-export const AuthSuccess = handleAction(
-    authSuccess,
+export const RegistrationSuccess = handleAction(
+    registrationSuccess,
     (state, action) => action.payload,
     false
 );
 
-export const AuthFailure = handleAction(
-    authFailure,
+export const RegistrationFailure = handleAction(
+    registrationFailure,
     (state, action) => action.payload,
     false
 );

@@ -1,14 +1,14 @@
 import {combineReducers} from 'redux';
-// import {search,searchQuery} from './search/search';
 import Form from './Form/';
 import {Products} from './ProductList/ProductListReducers.js';
-import {AuthLogin,AuthPassword,LogIn} from './Auth/AuthReducers';
-// import page from './seriesPageInfo/';
+import {AuthSuccess,AuthFailure} from './Auth/AuthReducers';
+import {RegistrationFailure,RegistrationSuccess} from './Registration/RegistrationReducers';
 
 export default combineReducers({
     Form,
     Products,
-    AuthLogin,
-    AuthPassword,
-    LogIn
+    AuthSuccess,
+    AuthFailure,
+    RegistrationFailure,
+    RegistrationSuccess
 });

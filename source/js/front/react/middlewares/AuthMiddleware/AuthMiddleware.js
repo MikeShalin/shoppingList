@@ -2,27 +2,29 @@ import {
     authRequest,
     authSuccess,
     authFailure,
-    loginEnter,
-    passwordEnter,
 } from '../../actions/Auth/AuthActions.js';
 import socket from '../../../../connect/socket-connect/socket-connect';
 
 
-const FormMiddleware = store => next => action => {
+const AuthMiddleware = store => next => action => {
     if (
         action.type === authRequest.toString()
     ) {
-        // const action = () => {
-        //     loginEnter:loginEnster(),
-        //     passwordEnter:passwordEnter()
-        // };
-        // socket.on("db",(res) => {
-            console.log('Я нахожусь в form moddleware', action.payload);
         socket.emit('getAuth',action.payload);
-        // store.dispatch(action.action.payload.name(action.payload.value));
-        // store.dispatch(editFormField(undefined));
+        socket.on("userIsAuth",(res) => {
+            console.log('Данные о наличие пользователя ',res);
+            if(res[0].ID){
+                localStorage.setItem('userID',res[0].ID.toString());
+                store.dispatch(authSuccess(res[0]));
+                store.dispatch(authFailure(false));
+            }
+            if(!res[0].ID){
+                store.dispatch(authSuccess(false));
+                store.dispatch(authFailure(true));
+            }
+        });
     }
     return next(action);
 };
 
-export default FormMiddleware;
+export default AuthMiddleware;

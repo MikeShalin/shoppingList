@@ -4,67 +4,38 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
-
+import {registrationRequest} from '../../actions/Registration/RegistrationActions';
+import PopUp from '../PopUp/';
+import Form from '../Form/';
 
 export class Registration extends Component{
-    handleSubmit = (e) =>{
-        e.preventDefault();
-      console.log("Компонент Registration отправка формы")
-    };
     render(){
+        const {RegistrationSuccess,RegistrationFailure,registrationRequest} = this.props;
         return (
-            <form className="form" >
-                <h2 className="form__title">Registration</h2>
-                <div className="form__container">
-                    <input type="email"
-                           name="email"
-                           // value={title}
-                           // onChange={this.handleChange}
-                           placeholder="email"
-                           className="form__input"
-                    />
-                    <input type="password"
-                           name="password"
-                        // value={title}
-                        // onChange={this.handleChange}
-                           placeholder="password"
-                           className="form__input"
-                    />
-                    <input
-                        type="submit"
-                        value="Sign Up"
-                        // disabled={title === ''}
-                        className="form__submit"
-                    />
-                </div>
-            </form>
-        );
+            <div>
+                <Form
+                    title = "Registration"
+                    submitValue="Sign Up"
+                    handleSubmit={registrationRequest}
+                />
+            <PopUp> {RegistrationSuccess?'Вы успешно зарегистрировались':RegistrationFailure?'Вы уже зарегистрированы':''} </PopUp>
+        </div>
+    );
     }
 }
 
 const mapStateToProps = (state) =>{
     return{
-        auth:state.auth
+        RegistrationSuccess:state.RegistrationSuccess,
+        RegistrationFailure:state.RegistrationFailure
     }
 };
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        // getProductList: (productList) => {
-        //     dispatch(getProductList(productList));
-        // },
-        // addNewProduct: (product) => {
-        //     dispatch(addNewProduct(product));
-        // },
-        // handleEdit: (product) => {
-        //     dispatch(handleEdit(product));
-        // },
-        // updateDoneRow: (ID) => {
-        //     dispatch(updateDoneRow(ID));
-        // },
-        // deleteProduct: (ID) => {
-        //     dispatch(deleteProduct(ID));
-        // }
+        registrationRequest: (reg) => {
+            dispatch(registrationRequest(reg));
+        }
     }
 };
 
