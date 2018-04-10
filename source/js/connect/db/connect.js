@@ -5,7 +5,7 @@ const mysql = require('mysql');
 module.exports = mysql.createConnection({
     host     : 'localhost',
     user     : 'root',
-    password : 'root', //root
-    database : 'shoppingList' //shoppingList
+    password : 'hBCm3IAnQj', //root
+    database : 'shoppinglist' //shoppingList
 });
 
