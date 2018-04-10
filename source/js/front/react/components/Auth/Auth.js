@@ -19,7 +19,7 @@ export class Auth extends Component{
                     submitValue="Log In"
                     handleSubmit={authRequest}
                 />
-                <PopUp> {AuthSuccess?'Вы успешно авторизовались':AuthFailure?'Не правильный логин или пароль':''} </PopUp>
+                <PopUp isError={AuthFailure}> {AuthSuccess?'You have been successfully authorized':AuthFailure?'Incorrect login or password':''} </PopUp>
             </div>
         );
     }

@@ -22,6 +22,7 @@ io.on("connection",socket => {
             const {insertId} = res,
                   {userId} = data;
             sql.query(sql.insertUserProducts(userId,insertId),(res)=>{
+                console.log('вставил в таблицу usersProoduct',res);
                 io.sockets.emit("addNewProduct",{status:"ok",productID:insertId});
             });
 
@@ -46,7 +47,7 @@ io.on("connection",socket => {
             if (res[0].C !== 0)
                 socket.emit("userIsReg",{reg:false});
             if (res[0].C === 0)
-                sql.query(sql.registrationUser(user.login,user.password),(res)=>socket.emit("userIsReg",{reg:true}));
+                sql.query(sql.registrationUser(user.login,user.password),(res)=>socket.emit("userIsReg",{regID:res.insertId}));
         });
     })
 

@@ -18,7 +18,7 @@ export class Registration extends Component{
                     submitValue="Sign Up"
                     handleSubmit={registrationRequest}
                 />
-            <PopUp> {RegistrationSuccess?'Вы успешно зарегистрировались':RegistrationFailure?'Вы уже зарегистрированы':''} </PopUp>
+            <PopUp isError={RegistrationFailure}> {RegistrationSuccess?'You have successfully registered':RegistrationFailure?'You are already registered':''} </PopUp>
         </div>
     );
     }

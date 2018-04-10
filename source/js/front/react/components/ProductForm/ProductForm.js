@@ -28,7 +28,6 @@ export class ProductForm extends Component {
     };
 
     render() {
-        console.log('d форме',this.props.form);
         const {form} = this.props,
               {product} = this.state;
         return (

@@ -49,7 +49,6 @@ export class ProductList extends Component {
     };
     render() {
         const {Products} = this.props;
-        console.log('ProductList',Products);
         return (
             <div>
                 <ProductForm

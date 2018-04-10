@@ -20,7 +20,6 @@ export class App extends Component {
 
     render() {
         const {AuthSuccess} = this.props;
-        console.log(AuthSuccess);
         return (
             <div>
                 <div>

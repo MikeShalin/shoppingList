@@ -12,15 +12,13 @@ const AuthMiddleware = store => next => action => {
     ) {
         socket.emit('getAuth',action.payload);
         socket.on("userIsAuth",(res) => {
-            console.log('Данные о наличие пользователя ',res);
-            if(res[0].ID){
+            if(res.length === 0){
+                store.dispatch(authSuccess(false));
+                store.dispatch(authFailure(true));
+            } else if(res[0].ID){
                 localStorage.setItem('userID',res[0].ID.toString());
                 store.dispatch(authSuccess(res[0]));
                 store.dispatch(authFailure(false));
-            }
-            if(!res[0].ID){
-                store.dispatch(authSuccess(false));
-                store.dispatch(authFailure(true));
             }
         });
     }

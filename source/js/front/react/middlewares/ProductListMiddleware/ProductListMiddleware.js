@@ -9,10 +9,8 @@ const ProductListMiddleware = store => next => action => {
         socket.emit('getProductList',ID);
 
         socket.on("db",(res) => {
-            console.log('В компоненте product list ',res);
             store.dispatch(successProducts(res));
         });
-        // store.dispatch(getProducts(undefined));
     }
     return next(action);
 };

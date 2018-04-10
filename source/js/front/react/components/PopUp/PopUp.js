@@ -5,8 +5,9 @@ import React, {Component} from 'react';
 
 class PopUp extends Component{
     render(){
+        const {isError} = this.props;
         return (
-            <h2 >
+            <h2 className={isError?"Popup--error":""}>
                 {this.props.children}
             </h2>
         );
