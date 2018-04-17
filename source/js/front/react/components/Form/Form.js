@@ -2,7 +2,7 @@
  * Created by mike on 28.03.18.
  */
 import React, {Component} from 'react';
-import Input from '../Input/';
+import Input from 'js/front/react/components/Input/';
 
 class Form extends Component{
     constructor(props){

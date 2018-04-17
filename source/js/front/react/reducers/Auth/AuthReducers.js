@@ -2,7 +2,7 @@ import {
     authRequest,
     authSuccess,
     authFailure,
-} from '../../actions/Auth/AuthActions.js';
+} from 'js/front/react/actions/Auth/AuthActions.js';
 import {handleAction, handleActions} from 'redux-actions';
 
 // export const AuthLogin = handleAction(

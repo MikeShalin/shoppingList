@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
-import {registrationRequest} from '../../actions/Registration/RegistrationActions';
-import PopUp from '../PopUp/';
-import Form from '../Form/';
+import {registrationRequest} from 'js/front/react/actions/Registration/RegistrationActions';
+import PopUp from 'js/front/react/components/PopUp/';
+import Form from 'js/front/react/components/Form/';
 
 export class Registration extends Component{
     render(){

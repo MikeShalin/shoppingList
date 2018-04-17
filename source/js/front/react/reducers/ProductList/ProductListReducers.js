@@ -3,7 +3,7 @@ import {addNewProduct,
     getProducts,
     successProducts,
     replaceProductInForm,
-    updateDoneRow} from '../../actions/ProductListActions/ProductListActions.js';
+    updateDoneRow} from 'js/front/react/actions/ProductListActions/ProductListActions.js';
 import {handleAction, handleActions} from 'redux-actions';
 
 export const Products = handleAction(

@@ -1,12 +1,10 @@
 import {takeLatest,select,call, take, put,cps,takeEvery} from 'redux-saga/effects';
-import {authRequest} from '../actions/Auth/AuthActions.js';
+import {authRequest,logout,authFailure, authSuccess} from 'js/front/react/actions/Auth/AuthActions.js';
 import "regenerator-runtime/runtime";
-import {authFailure, authSuccess} from "../actions/Auth/AuthActions";
-import socket from "../../../connect/socket-connect/socket-connect";
+import socket from "js/connect/socket-connect/socket-connect";
 
 function isAuth() {
     return isUser(socket).then(result=>{return result})
-
 }
 
 function isUser(socket) {
@@ -15,10 +13,10 @@ function isUser(socket) {
     });
 }
 
-function* getAuth(action) {
+function* getAuth(action){
     socket.emit('getAuth',action.payload);
     const user = yield call(isAuth);
-    console.log('isAuth ok',user);
+    console.log('user ',user );
     if(user){
         localStorage.setItem('userID',user.toString());
         yield put(authSuccess(user));
@@ -29,6 +27,13 @@ function* getAuth(action) {
     }
 }
 
+function* getLogout(){
+    yield localStorage.removeItem('userID');
+    yield put(authSuccess(false));
+    yield put(authFailure(false));
+}
+
 export const authFlow = function*() {
     yield takeLatest(authRequest, getAuth);
+    yield takeLatest(logout, getLogout);
 };

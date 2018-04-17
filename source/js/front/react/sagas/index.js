@@ -1,6 +1,5 @@
-
 import { fork } from 'redux-saga/effects';
-import { authFlow } from './sagas';
+import { authFlow } from 'js/front/react/sagas/Auth';
 
 export default function*() {
     yield fork(authFlow);

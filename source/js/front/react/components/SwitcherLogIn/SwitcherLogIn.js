@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {authExitRequest} from '../../actions/Auth/AuthActions.js';
+import {logout} from 'js/front/react/actions/Auth/AuthActions.js';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
-import ProductList from "../ProductList";
+import ProductList from "js/front/react/components/ProductList";
 
 export class Switcher extends Component{
     handleExit =(e)=> {
-        const {authExitRequest} = this.props;
+        const {logout} = this.props;
         e.preventDefault();
-        authExitRequest();
+        logout();
     };
     render(){
         return(
@@ -34,8 +34,8 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        authExitRequest:()=>{
-            dispatch(authExitRequest())
+        logout:()=>{
+            dispatch(logout())
         }
     }
 };

@@ -3,9 +3,9 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import socket from '../../../../connect/socket-connect/socket-connect';
-import ProductForm from '../ProductForm/ProductForm';
-import Item from '../Item/Item';
+import socket from 'js/connect/socket-connect/socket-connect';
+import ProductForm from 'js/front/react/components/ProductForm/';
+import Item from 'js/front/react/components/Item/';
 import {
     getProducts,
     addNewProduct,
@@ -14,8 +14,8 @@ import {
     replaceProductInForm,
     requestProducts,
     deleteProductSocket
-} from '../../actions/ProductListActions/ProductListActions.js';
-import Hammer from '../../../touch/hammer.min.js';
+} from 'js/front/react/actions/ProductListActions/ProductListActions.js';
+import Hammer from 'js/front/touch/hammer.min.js';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
 
 export class ProductList extends Component {

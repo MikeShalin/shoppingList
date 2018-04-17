@@ -4,16 +4,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
-import PopUp from '../PopUp/';
-import Form from '../Form/';
-import {authRequest} from '../../actions/Auth/AuthActions.js';
+import PopUp from 'js/front/react/components/PopUp/';
+import Form from 'js/front/react/components/Form/';
+import {authRequest} from 'js/front/react/actions/Auth/AuthActions.js';
 
 export class Auth extends Component{
     render(){
         const {AuthSuccess,AuthFailure,authRequest} = this.props;
         return (
             <div>
-
                 <Form
                     title="Authorization"
                     submitValue="Log In"

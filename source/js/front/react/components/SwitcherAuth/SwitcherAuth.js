@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
-import Registration from "../Registration";
-import Auth from "../Auth";
+import Registration from "js/front/react/components/Registration";
+import Auth from "js/front/react/components/Auth";
 
 export class Switcher extends Component{
     render(){

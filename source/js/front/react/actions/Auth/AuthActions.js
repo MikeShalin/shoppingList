@@ -5,14 +5,14 @@ import {createActions} from 'redux-actions';
 
 export const {
     authRequest: authRequest,
-    authExitRequest: authExitRequest,
+    logout: logout,
     authSuccess: authSuccess,
     authFailure: authFailure,
 } = createActions({
 
     AUTH_REQUEST: logIn =>logIn,
 
-    AUTH_EXIT_REQUEST: undefined,
+    LOGOUT: undefined,
 
     AUTH_SUCCESS: bool => bool,
 

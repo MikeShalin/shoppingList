@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
-import SwitcherLogIn from '../SwitcherLogIn/';
-import SwitcherAuth from '../SwitcherAuth/';
-import {authFailure, authSuccess} from "../../actions/Auth/AuthActions";
+import SwitcherLogIn from 'js/front/react/components/SwitcherLogIn/';
+import SwitcherAuth from 'js/front/react/components/SwitcherAuth/';
+import {authFailure, authSuccess} from "js/front/react/actions/Auth/AuthActions";
 
 export class App extends Component {
     componentDidMount(){

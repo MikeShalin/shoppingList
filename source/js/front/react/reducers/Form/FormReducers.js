@@ -1,4 +1,4 @@
-import {editFormField,formReset} from '../../actions/Form/FormActions.js';
+import {editFormField,formReset} from 'js/front/react/actions/Form/FormActions.js';
 import {handleAction, handleActions} from 'redux-actions';
 
 const Form = handleAction(

@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {editFormField,formReset} from '../../actions/Form/FormActions.js';
+import {editFormField,formReset} from 'js/front/react/actions/Form/FormActions.js';
 
 export class ProductForm extends Component {
 
