@@ -1,9 +1,4 @@
-import {addNewProduct,
-    deleteProduct,
-    getProducts,
-    successProducts,
-    replaceProductInForm,
-    updateDoneRow} from 'js/front/react/actions/ProductListActions/ProductListActions.js';
+import {successProducts} from 'js/front/react/actions/ProductListActions/ProductListActions.js';
 import {handleAction, handleActions} from 'redux-actions';
 
 export const Products = handleAction(
@@ -12,3 +7,4 @@ export const Products = handleAction(
     []
 );
 
+export const getProductState = state => state;

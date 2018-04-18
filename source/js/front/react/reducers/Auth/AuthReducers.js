@@ -1,21 +1,8 @@
 import {
-    authRequest,
     authSuccess,
     authFailure,
 } from 'js/front/react/actions/Auth/AuthActions.js';
 import {handleAction, handleActions} from 'redux-actions';
-
-// export const AuthLogin = handleAction(
-//     loginEnter,
-//     (state, action) => action.payload,
-//     ""
-// );
-//
-// export const AuthPassword = handleAction(
-//     passwordEnter,
-//     (state, action) => action.payload,
-//     ""
-// );
 
 export const AuthSuccess = handleAction(
     authSuccess,
@@ -28,5 +15,7 @@ export const AuthFailure = handleAction(
     (state, action) => action.payload,
     false
 );
+
+export const getAuthSuccess = state => state.AuthSuccess;
 
 

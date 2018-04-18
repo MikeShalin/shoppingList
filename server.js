@@ -35,7 +35,7 @@ io.on("connection",socket => {
 
 //    Получаю данные о пользователе
     socket.on('getAuth', user => {
-        sql.query(sql.getAuthUsers(user.login,user.password),(sql)=>{console.log(sql); socket.emit("userIsAuth",sql)});
+        sql.query(sql.getAuthUsers(user.login,user.password),(sql)=>{console.log(sql); socket.emit("userIsAuth",sql[0])});
     });
 
 //    Регистрация пользователя

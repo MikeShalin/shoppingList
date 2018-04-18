@@ -6,18 +6,14 @@ import {connect} from 'react-redux';
 import {Switch,Route,Link,Redirect,withRouter} from 'react-router-dom';
 import SwitcherLogIn from 'js/front/react/components/SwitcherLogIn/';
 import SwitcherAuth from 'js/front/react/components/SwitcherAuth/';
-import {authFailure, authSuccess} from "js/front/react/actions/Auth/AuthActions";
+import {authRequest} from "js/front/react/actions/Auth/AuthActions";
 
 export class App extends Component {
     componentDidMount(){
-        const {authSuccess,authFailure} = this.props,
-              userID = localStorage.getItem('userID');
-        if (userID){
-            authSuccess({ID:userID});
-            authFailure(false);
-        }
+        const {authRequest,AuthSuccess} = this.props;
+        if(!AuthSuccess)
+            authRequest();
     }
-
     render() {
         const {AuthSuccess} = this.props;
         return (
@@ -39,12 +35,9 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        authSuccess: (user) => {
-            dispatch(authSuccess(user));
-        },
-        authFailure: (bool) => {
-            dispatch(authFailure(bool));
-        },
+        authRequest: () => {
+            dispatch(authRequest());
+        }
         // handleEdit: (product) => {
         //     dispatch(handleEdit(product));
         // },
