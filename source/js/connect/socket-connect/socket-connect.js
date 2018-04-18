@@ -3,7 +3,7 @@
  */
 
 const port = 3003,
-    socket = io.connect("http://localhost:" + port);
+    socket = io.connect("http://mixailshalin:" + port);
 
 export default socket;
 
